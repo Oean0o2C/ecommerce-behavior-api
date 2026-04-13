@@ -1,10 +1,11 @@
-import os
 import streamlit as st
 import requests
 import pandas as pd
 import plotly.express as px
 from datetime import date, timedelta
 import time
+import os
+from config import get_api_base_url, get_all_environments
 
 # 设置页面标题和布局
 st.set_page_config(
@@ -15,15 +16,8 @@ st.set_page_config(
 
 # 初始化 session state
 if 'api_base_url' not in st.session_state:
-    # 优先读取环境变量（部署时用）
-    deployed_url = os.getenv("API_BASE_URL")
-    
-    if deployed_url:
-        # 线上环境：用 Railway 地址
-        st.session_state.api_base_url = deployed_url
-    else:
-        # 本地开发环境：用 localhost
-        st.session_state.api_base_url = "http://localhost:8000"
+    # 使用配置模块获取API基础URL
+    st.session_state.api_base_url = get_api_base_url()
 
 # 辅助函数：调用API（带缓存）
 @st.cache_data(ttl=600, show_spinner=False)  # 缓存10分钟，不使用持久化
@@ -96,11 +90,39 @@ with st.sidebar:
     
     # API Base URL 配置
     st.subheader("API 配置")
+    
+    # 获取所有环境配置
+    environments = get_all_environments()
+    
+    # 环境选择
+    env_names = [env["name"] for env in environments.values()]
+    current_env = "本地环境"
+    for env_key, env_config in environments.items():
+        if env_config["api_base_url"] == st.session_state.api_base_url:
+            current_env = env_config["name"]
+            break
+    
+    env_option = st.selectbox(
+        "环境选择",
+        env_names,
+        index=env_names.index(current_env) if current_env in env_names else 0
+    )
+    
+    # 根据环境选择设置默认API地址
+    default_api_url = "http://localhost:8000"
+    for env_config in environments.values():
+        if env_config["name"] == env_option:
+            default_api_url = env_config["api_base_url"]
+            break
+    
+    # API地址输入框
     api_url = st.text_input(
         "API Base URL",
-        value=st.session_state.api_base_url,
+        value=default_api_url,
         placeholder="http://localhost:8000"
     )
+    
+    # 更新API地址
     if api_url != st.session_state.api_base_url:
         st.session_state.api_base_url = api_url
         st.success("API地址已更新")
