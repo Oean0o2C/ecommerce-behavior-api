@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
@@ -14,7 +15,15 @@ st.set_page_config(
 
 # 初始化 session state
 if 'api_base_url' not in st.session_state:
-    st.session_state.api_base_url = "http://localhost:8000"
+    # 优先读取环境变量（部署时用）
+    deployed_url = os.getenv("API_BASE_URL")
+    
+    if deployed_url:
+        # 线上环境：用 Railway 地址
+        st.session_state.api_base_url = deployed_url
+    else:
+        # 本地开发环境：用 localhost
+        st.session_state.api_base_url = "http://localhost:8000"
 
 # 辅助函数：调用API（带缓存）
 @st.cache_data(ttl=600, show_spinner=False)  # 缓存10分钟，不使用持久化
