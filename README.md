@@ -64,6 +64,15 @@ streamlit run app.py
 
 详细说明见 [backend/README.md](backend/README.md) 和 [frontend/README.md](frontend/README.md)。
 
+### 5. 已部署环境
+
+**生产环境：**
+- **后端 API**：https://ecommerce-behavior-api-production.up.railway.app
+- **前端应用**：https://ecommerce-behavior-api-ymkretx2b4fq3zpobkzyjm.streamlit.app/
+
+**API 文档：**
+- https://ecommerce-behavior-api-production.up.railway.app/docs
+
 ***
 
 ## 项目结构

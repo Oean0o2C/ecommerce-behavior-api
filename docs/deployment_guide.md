@@ -26,6 +26,11 @@
    - Railway会自动开始部署过程
    - 部署完成后，你将获得一个公共URL
 
+### 1.3 已部署后端URL
+
+- **后端API URL**：https://ecommerce-behavior-api-production.up.railway.app
+- **健康检查**：https://ecommerce-behavior-api-production.up.railway.app/health
+
 ## 2. 前端部署（Streamlit Cloud）
 
 ### 2.1 准备工作
@@ -48,6 +53,10 @@
 3. **部署**：
    - Streamlit Cloud会自动开始部署过程
    - 部署完成后，你将获得一个公共URL
+
+### 2.3 已部署前端URL
+
+- **前端应用URL**：https://ecommerce-behavior-api-ymkretx2b4fq3zpobkzyjm.streamlit.app/
 
 ## 3. 数据库配置（Supabase）
 

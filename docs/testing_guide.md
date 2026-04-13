@@ -24,18 +24,20 @@
 | 测试项 | 步骤 | 预期结果 | 重要性 |
 |--------|------|----------|--------|
 | 后端服务启动 | 1. 进入backend目录<br>2. 执行 `python start.py` | 服务成功启动，无错误信息 | 高 |
-| 健康检查接口 | 1. 访问 `http://localhost:8000/health` | 返回 `{"status": "healthy"}` | 高 |
-| 销售概览接口 | 1. 访问 `http://localhost:8000/api/v1/sales/overview?start_date=2019-10-01&end_date=2019-10-07` | 返回销售概览数据，包含GMV、订单数等 | 高 |
-| 销售趋势接口 | 1. 访问 `http://localhost:8000/api/v1/sales/trend?granularity=day&start_date=2019-10-01&end_date=2019-10-07` | 返回销售趋势数据，按日期分组 | 高 |
-| 品类分析接口 | 1. 访问 `http://localhost:8000/api/v1/category/performance?category_level=l1&limit=10&start_date=2019-10-01&end_date=2019-10-07` | 返回品类表现数据 | 高 |
-| 用户漏斗接口 | 1. 访问 `http://localhost:8000/api/v1/user/funnel?start_date=2019-10-01&end_date=2019-10-07` | 返回用户行为漏斗数据 | 高 |
-| 热销商品接口 | 1. 访问 `http://localhost:8000/api/v1/products/top?metric=sales&limit=10&start_date=2019-10-01&end_date=2019-10-07` | 返回热销商品数据 | 高 |
+| 健康检查接口（本地） | 1. 访问 `http://localhost:8000/health` | 返回 `{"status": "healthy"}` | 高 |
+| 健康检查接口（部署） | 1. 访问 `https://ecommerce-behavior-api-production.up.railway.app/health` | 返回 `{"status": "healthy"}` | 高 |
+| 销售概览接口（部署） | 1. 访问 `https://ecommerce-behavior-api-production.up.railway.app/api/v1/sales/overview?start_date=2019-10-01&end_date=2019-10-07` | 返回销售概览数据，包含GMV、订单数等 | 高 |
+| 销售趋势接口（部署） | 1. 访问 `https://ecommerce-behavior-api-production.up.railway.app/api/v1/sales/trend?granularity=day&start_date=2019-10-01&end_date=2019-10-07` | 返回销售趋势数据，按日期分组 | 高 |
+| 品类分析接口（部署） | 1. 访问 `https://ecommerce-behavior-api-production.up.railway.app/api/v1/category/performance?category_level=l1&limit=10&start_date=2019-10-01&end_date=2019-10-07` | 返回品类表现数据 | 高 |
+| 用户漏斗接口（部署） | 1. 访问 `https://ecommerce-behavior-api-production.up.railway.app/api/v1/user/funnel?start_date=2019-10-01&end_date=2019-10-07` | 返回用户行为漏斗数据 | 高 |
+| 热销商品接口（部署） | 1. 访问 `https://ecommerce-behavior-api-production.up.railway.app/api/v1/products/top?metric=sales&limit=10&start_date=2019-10-01&end_date=2019-10-07` | 返回热销商品数据 | 高 |
 
 ### 3. 前端功能测试
 
 | 测试项 | 步骤 | 预期结果 | 重要性 |
 |--------|------|----------|--------|
-| 前端服务启动 | 1. 进入frontend目录<br>2. 执行 `streamlit run app.py` | 服务成功启动，浏览器打开前端页面 | 高 |
+| 前端服务启动（本地） | 1. 进入frontend目录<br>2. 执行 `streamlit run app.py` | 服务成功启动，浏览器打开前端页面 | 高 |
+| 前端应用访问（部署） | 1. 访问 `https://ecommerce-behavior-api-ymkretx2b4fq3zpobkzyjm.streamlit.app/` | 前端应用成功加载，无错误 | 高 |
 | 日期选择器功能 | 1. 选择开始日期为2019-10-01<br>2. 确认结束日期可以选择2019-10-07 | 日期选择正常，无限制错误 | 高 |
 | 销售概览显示 | 1. 进入销售概览标签页<br>2. 检查GMV、订单数等指标是否显示 | 数据显示正常，无错误 | 高 |
 | 销售趋势图表 | 1. 选择不同时间粒度（day/week/month）<br>2. 检查图表是否更新 | 图表显示正常，数据正确 | 高 |
@@ -48,10 +50,11 @@
 
 | 测试项 | 步骤 | 预期结果 | 重要性 |
 |--------|------|----------|--------|
-| 前后端集成 | 1. 启动后端服务<br>2. 启动前端服务<br>3. 检查前端是否能正常调用后端API | 前后端通信正常，数据显示正确 | 高 |
+| 前后端集成（本地） | 1. 启动后端服务<br>2. 启动前端服务<br>3. 检查前端是否能正常调用后端API | 前后端通信正常，数据显示正确 | 高 |
+| 前后端集成（部署） | 1. 访问部署的前端应用<br>2. 检查前端是否能正常调用部署的后端API | 前后端通信正常，数据显示正确 | 高 |
 | 时间范围过滤 | 1. 选择不同的时间范围<br>2. 检查所有标签页的数据是否相应更新 | 数据严格按照时间范围过滤 | 高 |
-| 性能测试 | 1. 测试页面加载时间<br>2. 测试API响应时间 | 页面加载时间<3秒，API响应时间<1秒 | 中 |
-| 错误处理 | 1. 输入无效的日期范围<br>2. 断开后端服务<br>3. 检查前端错误提示 | 错误处理正常，用户友好提示 | 中 |
+| 性能测试（部署） | 1. 测试部署的页面加载时间<br>2. 测试部署的API响应时间 | 页面加载时间<5秒，API响应时间<2秒 | 中 |
+| 错误处理 | 1. 输入无效的日期范围<br>2. 检查前端错误提示 | 错误处理正常，用户友好提示 | 中 |
 
 ### 5. 数据库测试
 
